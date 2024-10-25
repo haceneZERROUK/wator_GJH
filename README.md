@@ -1,6 +1,6 @@
 # Wator - Le Simulateur Aquatique qui N'a Pas Peur de Nager !
 
-![Wator Logo](https://via.placeholder.com/150)
+![alt text](https://via.placeholder.com/150)
 
 Bienvenue dans le monde merveilleux de Wator, où les poissons nagent, les requins chassent, et où la vie marine est plus excitante qu'un épisode de votre série préférée !
 
