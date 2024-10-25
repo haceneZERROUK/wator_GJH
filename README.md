@@ -10,7 +10,7 @@ Wator est un simulateur qui recrée l'écosystème marin. Dans ce projet, nous o
 
 ## Contributors (ou les grands plongeurs de ce projet) :
 
- **Hacene** : Le créateur des poissons ! S'il avait été un poisson, il aurait sûrement été un poisson-lune, tellement il brille.
+ -**Hacene** : Le créateur des poissons ! S'il avait été un poisson, il aurait sûrement été un poisson-lune, tellement il brille.
 - **Gauthier** : Le roi des requins, il sait comment rendre la chasse plus excitante qu’un film d’action.
 - **Jason** : L'architecte du monde marin, il transforme le code en paysage aquatique… sans faire de vagues.
 
