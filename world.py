@@ -33,17 +33,18 @@ class World:
                 if self.world_matrix[shark_generate_col][shark_generate_line] == 0:
                     shark -= 1
                     self.world_matrix[shark_generate_col][shark_generate_line] = 2
-    def dictionaire_init(self):
-        id_fish = 0
-        id_shark = 0
+    def init_list_fish_and_shark(self):
         for line in range(self.ligne):
             for col in range(self.colone):
                 if self.world_matrix[line][col] == 1:
-                    self.fish.append({id_fish : [line,col]})
-                    id_fish += 1
+                    self.fish.append("fish")
                 elif self.world_matrix[line][col] == 2:
-                    self.shark.append({id_shark : [line,col]})
-                    id_shark += 1
+                    self.shark.append("shark")
+                    
+    def where_is_the_fish(self):
+        return
+    def where_is_the_water(self):
+        return
 if __name__ == "__main__":
     # Exemple d'utilisation
     world = World("Mon monde", 1, 3, 3)
@@ -51,6 +52,6 @@ if __name__ == "__main__":
     for line in world.world_matrix:
         print(line)
     print("Autre\n")
-    world.dictionaire_init()
+    world.init_list_fish_and_shark()
     print(f"{world.shark=}")
     print(f"{world.fish=}")
