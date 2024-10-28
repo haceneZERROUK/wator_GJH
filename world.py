@@ -1,4 +1,3 @@
-import math
 import random
 
 def generate_wator_table(col, row):
