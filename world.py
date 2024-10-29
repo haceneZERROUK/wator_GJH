@@ -1,10 +1,38 @@
 import random
-
+from fish import Fish
+from shark import Shark
 def generate_wator_table(col, row):
     table = []
     for i in range(col):
         table.append([0] * row)  # Utilisation de la multiplication pour créer des listes
     return table
+
+
+
+
+def scan(self):
+        scan_eau=[]
+        scan_shark=[]
+        scan_fish=[]
+        # x = self.position[0]
+        # y = self.position[1]
+        directions = [
+            [self.position[0] - 1, self.position[0]], # Haut
+            [self.position[0]+1,self.position[1]], # Bas
+            [self.position[0],self.position[1] - 1], # Gauche
+            [self.position[0]+1,self.position[1] + 1] # Droite
+        ]
+        for coord in directions:
+            if world[coord[0]][coord[1]] == 0:
+                scan_eau.append(coord)
+            elif world[coord[0]][coord[1]] == 1:
+                scan_fish.append(coord)
+            elif world[coord[0]][coord[1]] == 2:
+                scan_shark.append(coord)
+        return scan_eau, scan_fish, scan_shark
+
+eau , poisson ,requin = scan(1,1)
+print(eau)
 
 class World:
     
@@ -37,9 +65,9 @@ class World:
         for line in range(self.ligne):
             for col in range(self.colone):
                 if self.world_matrix[line][col] == 1:
-                    self.fish.append("fish")
+                    self.fish.append(Fish((line, col, True)))
                 elif self.world_matrix[line][col] == 2:
-                    self.shark.append("shark")
+                    self.shark.append(Shark(line, col, 0, 4, True))
                     
     def where_is_the_fish(self):
         return
