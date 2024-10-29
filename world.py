@@ -16,13 +16,13 @@ def scan(self):
         scan_fish=[]
         # x = self.position[0]
         # y = self.position[1]
-        positions = [
+        directions = [
             [self.position[0] - 1, self.position[0]], # Haut
             [self.position[0]+1,self.position[1]], # Bas
             [self.position[0],self.position[1] - 1], # Gauche
             [self.position[0]+1,self.position[1] + 1] # Droite
         ]
-        for coord in positions:
+        for coord in directions:
             if world[coord[0]][coord[1]] == 0:
                 scan_eau.append(coord)
             elif world[coord[0]][coord[1]] == 1:
