@@ -8,32 +8,6 @@ def generate_wator_table(col, row):
     return table
 
 
-
-
-def scan(self):
-        scan_eau=[]
-        scan_shark=[]
-        scan_fish=[]
-        # x = self.position[0]
-        # y = self.position[1]
-        directions = [
-            [self.position[0] - 1, self.position[0]], # Haut
-            [self.position[0]+1,self.position[1]], # Bas
-            [self.position[0],self.position[1] - 1], # Gauche
-            [self.position[0]+1,self.position[1] + 1] # Droite
-        ]
-        for coord in directions:
-            if world[coord[0]][coord[1]] == 0:
-                scan_eau.append(coord)
-            elif world[coord[0]][coord[1]] == 1:
-                scan_fish.append(coord)
-            elif world[coord[0]][coord[1]] == 2:
-                scan_shark.append(coord)
-        return scan_eau, scan_fish, scan_shark
-
-eau , poisson ,requin = scan(1,1)
-print(eau)
-
 class World:
     
     def __init__(self, titre, chronon, colone, ligne):
@@ -68,11 +42,30 @@ class World:
                     self.fish.append(Fish((line, col, True)))
                 elif self.world_matrix[line][col] == 2:
                     self.shark.append(Shark(line, col, 0, 4, True))
-                    
-    def where_is_the_fish(self):
-        return
-    def where_is_the_water(self):
-        return
+    def scan(self):
+        scan_eau=[]
+        scan_shark=[]
+        scan_fish=[]
+        # x = self.position[0]
+        # y = self.position[1]
+        directions = [
+            [self.position[0] - 1, self.position[0]], # Haut
+            [self.position[0]+1,self.position[1]], # Bas
+            [self.position[0],self.position[1] - 1], # Gauche
+            [self.position[0]+1,self.position[1] + 1] # Droite
+        ]
+        for coord in directions:
+            cellule = world[coord[0]][coord[1]]
+            if cellule == 0:
+                scan_eau.append(coord)
+            elif isinstance(cellule, Fish):
+                scan_fish.append(coord)
+            elif isinstance(cellule, Shark):
+                scan_shark.append(coord)
+        return scan_eau, scan_fish, scan_shark
+
+eau , poisson ,requin = scan(1,1)
+print(eau)
 if __name__ == "__main__":
     # Exemple d'utilisation
     world = World("Mon monde", 1, 3, 3)
