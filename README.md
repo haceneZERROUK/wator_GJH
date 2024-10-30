@@ -1,6 +1,6 @@
 # Wator - Le Simulateur Aquatique qui N'a Pas Peur de Nager !
 
-![alt text](https://via.placeholder.com/150)
+![alt text](https://www.2tout2rien.fr/wp-content/uploads/2021/12/Des-requins-avec-des-dents-humaines-photoshop-surrealiste-hybride-1.jpg)
 
 Bienvenue dans le monde merveilleux de Wator, où les poissons nagent, les requins chassent, et où la vie marine est plus excitante qu'un épisode de votre série préférée !
 
