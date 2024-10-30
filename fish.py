@@ -1,6 +1,5 @@
-
 class Fish:
-    def __init__(self, position : tuple, valeur_accouchement = VALEUR_ACCOUCHEMENT_POISSON, chronon = 0 ):
+    def __init__(self, position : tuple, valeur_accouchement = 1, chronon = 0 ):
         self.position = position
         self.valeur_accouchement = valeur_accouchement
         self.indice_reproduction = 0
