@@ -1,18 +1,19 @@
-VALEUR_INITIALE_REPRODUCTION = 5
+from fish import Fish
 
 
 class Shark(Fish):
-    def __init__(self, position,  indice_reproduction,  energy_value=3, vivant=True, valeur = 2,):
-        super().__init__(position, indice_reproduction)
-        self.valeur = valeur
-        self.energy_value = energy_value
-        self.indice_reproduction = indice_reproduction
-        self.vivant = vivant
+    ENERGY_REQUIN_INITIALE = 10
 
-    def reproduction(self):
-        if self.indice_reproduction >= VALEUR_INITIALE_REPRODUCTION:
-            if Shark.scan(self.position):
+    def __init__(self, position : tuple, valeur_accouchement : int = 10, chronon : int = 0, energy : int = ENERGY_REQUIN_INITIALE):
+        super().__init__(position, valeur_accouchement, chronon)
 
-    def maj_reproduction(self):
-        self.indice_reproduction +=1
-        return self.indice_reproduction
+        self.energy = energy
+        self.valeur_accouchement = valeur_accouchement
+        self.indice_reproduction = 0
+
+    def eat(self):
+        self.energy = Shark.ENERGY_REQUIN_INITIALE
+
+    def perte_energy(self):
+        self.energy -= 1
+
