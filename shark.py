@@ -8,4 +8,7 @@ class Shark(Fish):
 
         def eat(self):
             self.energy = 10
-            
+
+        def perte_energy(self):
+            self.energy += 1
+

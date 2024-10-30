@@ -6,6 +6,8 @@ class Fish:
         self.chronon = chronon
 
 
+    def incrementation_chronon(self):
+        self.chronon += 1
 
     def augmentation_current_reproduction(self):
         self.current_reproduction += 1
