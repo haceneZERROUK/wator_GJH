@@ -15,8 +15,8 @@ class Fish:
     def reset_indice_reproduction(self):
         self.indice_reproduction = 0
 
-    def set_value(self, x,y):
+    def set_position(self, x,y):
         self.position = (x,y)
     
-    def get_value(self):
+    def get_position(self):
         return self.position
