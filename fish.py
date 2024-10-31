@@ -36,6 +36,9 @@ class Fish:
         """
         self.position = (x,y)
     
+    def possibilite_reproduction(self):
+        return self.indice_reproduction >= self.valeur_accouchement
+
     def get_position(self):
         """
         Retourne la position actuelle du poisson.

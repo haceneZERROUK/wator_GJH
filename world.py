@@ -55,11 +55,11 @@ class World:
             [position[0],(position[1] + 1) % COLONNE] # Droite
         ]
         for coord in directions:
-            if self.grid[coord[0]][coord[1]] == 0:
+            if self.grid.get_value(coord) == 0:
                 scan_eau.append(coord)
-            elif isinstance(self.grid[coord[0]][coord[1]], Fish):
+            elif isinstance(self.grid.get_value(coord), Fish):
                 scan_fish.append(coord)
-            elif isinstance(self.grid[coord[0]][coord[1]], Shark):
+            elif isinstance(self.grid.get_value(coord), Shark):
                 scan_shark.append(coord)
         return [scan_eau, scan_fish, scan_shark]
 
@@ -70,7 +70,7 @@ class World:
         for animal in self.list_fishes:
             postion_check_actual = self.animal.get_position()
             self.scan_cases(postion_check_actual)
-            if isinstance((self.grid[0], self.grid[1]), Shark):
+            if isinstance((self.grid.get_value(animal.position)), Shark):
                 if scan_cases[1]!= []:
                     animal.eat()
                     (x_poisson_mange,y_poisson_mange) = random.choice(scan_cases[1])

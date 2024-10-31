@@ -18,6 +18,7 @@ class Grid:
         self.colone = colone
         self.ligne = ligne
         self.bassin = generate_wator_table(colone, ligne)
+        self.form_table = []
 
     def get_value(self, pos:tuple) -> int|object|None:
         """
@@ -44,6 +45,22 @@ class Grid:
         line = pos[0]
         col = pos[1]
         self.bassin[line][col] = value
+
+
+
+    def generate_alternative_grid(self):
+        for ligne_grid in self.bassin:
+            for colonne_grid in ligne_grid:
+                if isinstance(colonne_grid , Shark):
+                    self.form_table.append('S')
+                elif isinstance(colonne_grid, Fish):
+                    self.form_table.append('F')
+                elif colonne_grid == 0:
+                    self.form_table.append('0')
+                else:
+                    ValueError()
+
+
 
     def print_grid(self) -> str:
         """
