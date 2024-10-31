@@ -1,5 +1,5 @@
 class Fish:
-    def __init__(self, position : tuple, valeur_accouchement = 1, chronon = 0 ):
+    def __init__(self, position : tuple, valeur_accouchement = 10, chronon = 0 ):
         """
         Initialise une instance de Fish.
 
@@ -26,7 +26,7 @@ class Fish:
         """Réinitialise l'indice de reproduction à 0."""
         self.indice_reproduction = 0
 
-    def set_position(self, x,y):
+    def set_position(self, tuple_position):
         """
         Définit la position du poisson.
 
@@ -34,7 +34,7 @@ class Fish:
             x (int): Coordonnée x de la nouvelle position.
             y (int): Coordonnée y de la nouvelle position.
         """
-        self.position = (x,y)
+        self.position = (tuple_position)
     
     def possibilite_reproduction(self):
         return self.indice_reproduction >= self.valeur_accouchement
