@@ -1,7 +1,7 @@
 def generate_wator_table(col, row):
     table = []
-    for i in range(col):
-        table.append([0] * row)  # Utilisation de la multiplication pour créer des listes
+    for i in range(row):
+        table.append([0] * col)  # Utilisation de la multiplication pour créer des listes
     return table
 
 
@@ -59,6 +59,7 @@ class Grid:
                     self.form_table.append('0')
                 else:
                     ValueError()
+ 
 
 
 
@@ -71,7 +72,7 @@ class Grid:
         """
         new_str = ""
         for index in range(self.ligne):
-            new_str += f"{self.bassin[index]}"
+            new_str += f"{self.form_table[index]}"
             if index < self.ligne -1:
                 new_str += "\n"
         print(new_str)

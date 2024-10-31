@@ -29,18 +29,18 @@ class World:
             choice_random = random.randint(1, 2)
             generate_col = random.randint(0, self.colonne - 1)
             generate_line = random.randint(0, self.ligne - 1)
-            if choice_random == 1 and Fish > 0:
-                if self.grid.get_value((generate_col,generate_line)) == 0:
+            if choice_random == 1 and self.nombre_de_poissons_initial > 0:
+                if self.grid.get_value((generate_line,generate_col)) == 0:
                     self.nombre_de_poissons_initial -= 1
-                    new_fish = Fish((generate_col,generate_line))
-                    self.grid.set_value((generate_col,generate_line), new_fish)
+                    new_fish = Fish((generate_line,generate_col))
+                    self.grid.set_value((generate_line,generate_col), new_fish)
                     self.list_fishes.append(new_fish)
                     
             elif choice_random == 2 and self.nombre_de_requins_initial > 0:
-                if self.grid.get_value((generate_col,generate_line)) == 0:
+                if self.grid.get_value((generate_line,generate_col)) == 0:
                     self.nombre_de_requins_initial -= 1
-                    new_shark = Shark((generate_col,generate_line))
-                    self.grid.set_value((generate_col,generate_line), new_shark)
+                    new_shark = Shark((generate_line,generate_col))
+                    self.grid.set_value((generate_line,generate_col), new_shark)
                     self.list_sharks.append(new_shark)
         
 
