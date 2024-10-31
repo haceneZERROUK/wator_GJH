@@ -63,61 +63,70 @@ class World:
                 scan_shark.append(coord)
         return [scan_eau, scan_fish, scan_shark]
 
-    
-    
-    def move_and_reproduction(self):
-        postion_check_actual = self.list_fishes[0].get_position
-        if isinstance((self.grid.get_value(fish.pos)), Fish):
-            if scan_cases[0]!=[]:
-                if Fish.possibilite_reproduction():
-                    x_temporaire,y_temporaire = self.grid[0], self.grid[1]
-                    fish.set_position(random.choice(scan_cases[0]))
-                    fish.reset_indice_reproduction()
-                    new_fish = fish(x_temporaire,y_temporaire)
-                    liste_fish.append(new_fish)
-                    grid.set_position(fish, self.grid[0], self.grid[1])
-                    grid.set_position(new_fish, x_temporaire,y_temporaire)
-                else:
-                    fish.set_position(random.choice(scan_cases[1]))
-                    fish.incrementation_indice_reproduction()
-                    grid.set_position(fish,self.grid[0], self.grid[1])
-        elif isinstance((self.grid[0], self.grid[1]), Shark):
-            if scan_cases[1]!= []
-                shark.eat()
-                (x_poisson_mange,y_poisson_mange) = random.choice(scan_cases[1])
-                if shark.possibilite_reproduction():
-                    x_temporaire,y_temporaire = self.grid[0], self.grid[1]
-                    liste_fish = [fish for fish in liste_fish if fish.position != (x_poisson_mange,y_poisson_mange)]
-                    shark.set_position(x_poisson_mange,y_poisson_mange)
-                    new_shark = Shark(x_temporaire,y_temporaire)
-                    list_shark.append(new_shark)
-                    grid.set_position(shark, self.grid[0], self.grid[1])
-                    grid.set_position(new_shark, x_temporaire,y_temporaire)
-                    shark.reset_indice_reproduction()
-                else:
-                    x_temporaire,y_temporaire = self.grid[0], self.grid[1]
-                    liste_fish = [fish for fish in liste_fish if fish.position != (x_poisson_mange,y_poisson_mange)]
-                    shark.set_position(x_poisson_mange,y_poisson_mange)
-                    grid.set_position(shark, x_poisson_mange,y_poisson_mange)
-                    grid.set_position(0, x_temporaire,y_temporaire)
-            elif scan_cases[0]!=[]:
-                if shark.possibilite_reproduction():
-                    x_temporaire,y_temporaire = self.grid[0], self.grid[1]
-                    shark.set_position(random.choice(scan_cases[1]))
-                    new_shark = Shark(x_temporaire,y_temporaire)
-                    list_shark.append(new_shark)
-                    grid.set_position(shark, self.grid[0], self.grid[1])
-                    grid.set_position(new_shark, x_temporaire,y_temporaire)
-                    shark.reset_indice_reproduction()
-                else:
-                    x_temporaire,y_temporaire = self.grid[0], self.grid[1]
-                    shark.set_position(random.choice(scan_cases[1]))
-                    grid.set_position(shark, self.grid[0], self.grid[1])
-                    grid.set_position(0, x_temporaire,y_temporaire)
-                    shark.reset_indice_reproduction()
+    scan_cases = scan_cases_autour()
+
+    def move_and_reproduction(self,scan_cases):
+        self.list_fishes = [Fish(0.1), Fish(1,2)]
+        for animal in self.list_fishes:
+            postion_check_actual = self.animal.get_position()
+            self.scan_cases(postion_check_actual)
+            if isinstance((self.grid[0], self.grid[1]), Shark):
+                if scan_cases[1]!= []:
+                    shark.eat()
+                    (x_poisson_mange,y_poisson_mange) = random.choice(scan_cases[1])
+                    if shark.possibilite_reproduction():
+                        x_temporaire,y_temporaire = self.grid[0], self.grid[1]
+                        liste_fish = [fish for fish in liste_fish if fish.position != (x_poisson_mange,y_poisson_mange)]
+                        shark.set_position(x_poisson_mange,y_poisson_mange)
+                        new_shark = Shark(x_temporaire,y_temporaire)
+                        list_shark.append(new_shark)
+                        grid.set_position(shark, self.grid[0], self.grid[1])
+                        grid.set_position(new_shark, x_temporaire,y_temporaire)
+                        shark.reset_indice_reproduction()
+                    else:
+                        x_temporaire,y_temporaire = self.grid[0], self.grid[1]
+                        liste_fish = [fish for fish in liste_fish if fish.position != (x_poisson_mange,y_poisson_mange)]
+                        shark.set_position(x_poisson_mange,y_poisson_mange)
+                        grid.set_position(shark, x_poisson_mange,y_poisson_mange)
+                        grid.set_position(0, x_temporaire,y_temporaire)
+                elif scan_cases[0]!=[]:
+                    if shark.possibilite_reproduction():
+                        x_temporaire,y_temporaire = self.grid[0], self.grid[1]
+                        shark.set_position(random.choice(scan_cases[1]))
+                        new_shark = Shark(x_temporaire,y_temporaire)
+                        list_shark.append(new_shark)
+                        grid.set_position(shark, self.grid[0], self.grid[1])
+                        grid.set_position(new_shark, x_temporaire,y_temporaire)
+                        shark.reset_indice_reproduction()
+                    else:
+                        x_temporaire,y_temporaire = self.grid[0], self.grid[1]
+                        shark.set_position(random.choice(scan_cases[1]))
+                        grid.set_position(shark, self.grid[0], self.grid[1])
+                        grid.set_position(0, x_temporaire,y_temporaire)
+                        shark.reset_indice_reproduction()
+            elif isinstance((self.grid.get_value(fish.position), Fish)):
+                if scan_cases[0]!=[]:
+                    if Fish.possibilite_reproduction():
+                        x_temporaire,y_temporaire = self.grid[0], self.grid[1]
+                        fish.set_position(random.choice(scan_cases[0]))
+                        Fish.reset_indice_reproduction()
+                        new_fish = Fish(x_temporaire,y_temporaire)
+                        liste_fish.append(new_fish)
+                        grid.set_position(fish, self.grid[0], self.grid[1])
+                        grid.set_position(new_fish, x_temporaire,y_temporaire)
+                    else:
+                        fish.set_position(random.choice(scan_cases[1]))
+                        fish.incrementation_indice_reproduction()
+                        grid.set_position(fish,self.grid[0], self.grid[1])
+                
 
 
-
+bbfish=Fish((1,2))
+bbfish.get_position()
+list_fishes=[]
+list_fishes.append(bbfish)
+postion_check_actual = list_fishes[0].get_position()
+print(bbfish.get_position())
 
 #------------------------PARTIE JASON----------------------------
 
