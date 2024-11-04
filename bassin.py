@@ -85,13 +85,19 @@ class Grid:
         for ligne in self.bassin:
             for colonne in ligne:
                 if isinstance(colonne, Shark):
-                    print('S', end = ' ')
+                    if colonne.chronon <5:
+                        print('\U0001F990', end = ' ')
+                    else :
+                        print('\U0001F99E', end = ' ')
                 elif isinstance(colonne, Fish):
-                    print('F', end = ' ')
+                    if colonne.chronon <5:
+                        print('\U0001F421', end = ' ')
+                    else:
+                        print('\U0001F420', end = ' ')
                 else:
-                    print(0, end = ' ')
-            print ('')
+                    print('\U0001F30A', end = ' ')
 
+            print ('')
 # if __name__ == "__main__":
 #     # Exemple d'utilisation
 #     new_world = Grid(5,4)

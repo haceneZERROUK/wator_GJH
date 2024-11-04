@@ -27,4 +27,6 @@ class Shark(Fish):
     def perte_energy(self):
         """Diminue l'énergie du requin de 1."""
         self.energy -= 1
+    
+
 
