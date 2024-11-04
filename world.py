@@ -3,8 +3,8 @@ from fish import Fish
 from shark import Shark
 import bassin
 
-COLONNE = 2
-LIGNE = 2
+COLONNE = 3
+LIGNE = 3
 # def generate_wator_table(col, row):
 #     table = []
 #     for i in range(col):
@@ -65,7 +65,6 @@ class World:
 
     def move_and_reproduction(self):
         scan_cases = self.scan_cases_autour(animal.get_position())
-        print(scan_cases)
         # postion_check_actual = animal.get_position()
         # self.scan_cases(postion_check_actual)
         if isinstance((self.grid.get_value(animal.position)), Shark):
@@ -74,16 +73,16 @@ class World:
                 (x_poisson_mange,y_poisson_mange) = random.choice(scan_cases[1])
                 if animal.possibilite_reproduction():
                     (x_temporaire,y_temporaire) = animal.get_position()
-                    liste_fish = [fish for fish in self.list_fishes if fish.position != (x_poisson_mange,y_poisson_mange)]
+                    self.list_fishes = [fish for fish in self.list_fishes if fish.position != (x_poisson_mange,y_poisson_mange)]
                     animal.set_position((x_poisson_mange,y_poisson_mange))
-                    new_shark = Shark(x_temporaire,y_temporaire)
+                    new_shark = Shark((x_temporaire,y_temporaire))
                     self.list_sharks.append(new_shark)
                     self.grid.set_value((x_poisson_mange,y_poisson_mange),animal)
                     self.grid.set_value((x_temporaire,y_temporaire), new_shark)
                     animal.reset_indice_reproduction()
                 else:
                     (x_temporaire,y_temporaire) = animal.get_position()
-                    liste_fish = [fish for fish in self.list_fishes if fish.position != (x_poisson_mange,y_poisson_mange)]
+                    self.list_fishes = [fish for fish in self.list_fishes if fish.position != (x_poisson_mange,y_poisson_mange)]
                     animal.set_position((x_poisson_mange,y_poisson_mange))
                     self.grid.set_value((x_poisson_mange,y_poisson_mange), animal)
                     self.grid.set_value((x_temporaire,y_temporaire), 0)
@@ -91,10 +90,10 @@ class World:
                 if animal.possibilite_reproduction():
                     (x_temporaire,y_temporaire) = animal.get_position()
                     animal.set_position(random.choice(scan_cases[0]))
-                    new_shark = Shark(x_temporaire,y_temporaire)
+                    new_shark = Shark((x_temporaire,y_temporaire))
                     self.list_sharks.append(new_shark)
                     self.grid.set_value((animal.get_position()), animal)
-                    self.grid.set_value( x_temporaire,y_temporaire, new_shark)
+                    self.grid.set_value((x_temporaire,y_temporaire), new_shark)
                     animal.reset_indice_reproduction()
                 else:
                     (x_temporaire,y_temporaire) = animal.get_position()
@@ -108,10 +107,10 @@ class World:
                     (x_temporaire,y_temporaire) = animal.get_position()
                     animal.set_position(random.choice(scan_cases[0]))
                     animal.reset_indice_reproduction()
-                    new_fish = Fish(x_temporaire,y_temporaire)
-                    liste_fish.append(new_fish)
+                    new_fish = Fish((x_temporaire,y_temporaire))
+                    self.list_fishes.append(new_fish)
                     self.grid.set_value((animal.get_position()), animal)
-                    self.grid.set_value( x_temporaire,y_temporaire, new_fish)
+                    self.grid.set_value((x_temporaire,y_temporaire), new_fish)
                 else:
                     (x_temporaire,y_temporaire) = animal.get_position()
                     animal.set_position(random.choice(scan_cases[0]))
@@ -123,26 +122,30 @@ class World:
 
 if __name__ == "__main__":
     # Exemple d'utilisation
-    new_world = World(2,2)
+    new_world = World(2,0)
 
 new_world.placer_les_animaux_initialement()
 new_world.grid.print_grid()
+print()
 # print(new_world.list_fishes[0].position)
 # print(new_world.list_fishes[0].indice_reproduction)
-print(new_world.list_fishes)
-for animal in new_world.list_fishes:
+for i in range(11):
+    for animal in new_world.list_fishes:
+        new_world.scan_cases_autour(animal.get_position())
+        new_world.move_and_reproduction()
+        animal.incrementation_indice_reproduction()
+        new_world.grid.print_grid()
+        print()
+"""for animal in new_world.list_sharks:
     new_world.scan_cases_autour(animal.get_position())
     new_world.move_and_reproduction()
     new_world.grid.print_grid()
-for animal in new_world.list_sharks:
-    new_world.scan_cases_autour(animal.get_position())
-    new_world.move_and_reproduction()
-    new_world.grid.print_grid()
-
+    print()"""
+print(len(new_world.list_fishes))
 # print(new_world.scan_cases_autour(new_world.list_sharks.position))
 print()
 # print(new_world.list_fishes[0].indice_reproduction)
-new_world.grid.print_grid()
+# new_world.grid.print_grid()
 
 # bbfish=Fish((1,2))
 # bbfish.get_position()
