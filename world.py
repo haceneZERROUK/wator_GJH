@@ -5,16 +5,19 @@ import bassin
 
 COLONNE = 50
 LIGNE = 50
-# def generate_wator_table(col, row):
-#     table = []
-#     for i in range(col):
-#         table.append([0] * row)  # Utilisation de la multiplication pour créer des listes
-#     return table
-
+REQUIN_ENERGY = 10
+REPRODUCTION_FISH = 10
+REPRODUCTION_SHARK = 10
 
 class World:
 
-    def __init__(self, nombre_de_poissons_initial, nombre_de_requins_initial, ligne = LIGNE, colonne = COLONNE):
+    def __init__(self, nombre_de_poissons_initial,
+                 nombre_de_requins_initial,
+                 ligne = LIGNE,
+                 colonne = COLONNE,
+                 requin_energy = REQUIN_ENERGY,
+                 reproduction_fish = REPRODUCTION_FISH,
+                 reproduction_shark = REPRODUCTION_SHARK):
         self.ligne = ligne
         self.colonne = colonne
         self.grid = bassin.Grid(ligne,colonne)
@@ -22,6 +25,9 @@ class World:
         self.list_sharks = []
         self.nombre_de_requins_initial = nombre_de_requins_initial
         self.nombre_de_poissons_initial = nombre_de_poissons_initial
+        self.requin_energy = requin_energy
+        self.reproduction_fish = reproduction_fish
+        self.reproduction_shark = reproduction_shark
     
     def check_death_and_kill(self, shark):
         if shark.energy <= 0:
@@ -34,18 +40,19 @@ class World:
             choice_random = random.randint(1, 2)
             generate_col = random.randint(0, self.colonne - 1)
             generate_line = random.randint(0, self.ligne - 1)
+            generate_position = (generate_line,generate_col)
             if choice_random == 1 and self.nombre_de_poissons_initial > 0:
-                if self.grid.get_value((generate_line,generate_col)) == 0:
+                if self.grid.get_value(generate_position) == 0:
                     self.nombre_de_poissons_initial -= 1
-                    new_fish = Fish((generate_line,generate_col))
-                    self.grid.set_value((generate_line,generate_col), new_fish)
+                    new_fish = Fish(generate_position, valeur_accouchement=self.reproduction_fish)
+                    self.grid.set_value(generate_position, new_fish)
                     self.list_fishes.append(new_fish)
                     
             elif choice_random == 2 and self.nombre_de_requins_initial > 0:
-                if self.grid.get_value((generate_line,generate_col)) == 0:
+                if self.grid.get_value(generate_position) == 0:
                     self.nombre_de_requins_initial -= 1
-                    new_shark = Shark((generate_line,generate_col))
-                    self.grid.set_value((generate_line,generate_col), new_shark)
+                    new_shark = Shark(generate_position,valeur_accouchement=self.reproduction_shark, energy=self.requin_energy)
+                    self.grid.set_value(generate_position, new_shark)
                     self.list_sharks.append(new_shark)
 
 
@@ -77,58 +84,60 @@ class World:
             if isinstance((self.grid.get_value(animal.position)), Shark):
                 if scan_cases[1]!= []:
                     animal.eat()
-                    (x_poisson_mange,y_poisson_mange) = random.choice(scan_cases[1])
+                    position_poisson_mange = random.choice(scan_cases[1])
                     if animal.possibilite_reproduction():
-                        (x_temporaire,y_temporaire) = animal.get_position()
-                        print((x_temporaire,y_temporaire))
-                        self.list_fishes.remove(self.grid.get_value((x_poisson_mange,y_poisson_mange)))
-                        animal.set_position((x_poisson_mange,y_poisson_mange))
-                        new_shark = Shark((x_temporaire,y_temporaire))
+                        position_tempraire = animal.get_position()
+                        print(position_tempraire)
+                        self.list_fishes.remove(self.grid.get_value(position_poisson_mange))
+                        animal.set_position(position_poisson_mange)
+                        new_shark = Shark(position_tempraire,valeur_accouchement=self.reproduction_shark, energy=self.requin_energy)
                         self.list_sharks.append(new_shark)
-                        self.grid.set_value((x_poisson_mange,y_poisson_mange),animal)
-                        self.grid.set_value((x_temporaire,y_temporaire), new_shark)
+                        self.grid.set_value(position_poisson_mange,animal)
+                        self.grid.set_value(position_tempraire, new_shark)
                         animal.reset_indice_reproduction()
                     else:
-                        (x_temporaire,y_temporaire) = animal.get_position()
-                        self.list_fishes.remove(self.grid.get_value((x_poisson_mange,y_poisson_mange)))
-                        animal.set_position((x_poisson_mange,y_poisson_mange))
-                        self.grid.set_value((x_poisson_mange,y_poisson_mange), animal)
-                        self.grid.set_value((x_temporaire,y_temporaire), 0)
+                        position_tempraire = animal.get_position()
+                        self.list_fishes.remove(self.grid.get_value(position_poisson_mange))
+                        animal.set_position(position_poisson_mange)
+                        self.grid.set_value(position_poisson_mange, animal)
+                        self.grid.set_value(position_tempraire, 0)
                         animal.incrementation_indice_reproduction()
                 elif scan_cases[0]!=[]:
                     if animal.possibilite_reproduction():
-                        (x_temporaire,y_temporaire) = animal.get_position()
+                        position_tempraire = animal.get_position()
                         animal.set_position(random.choice(scan_cases[0]))
-                        new_shark = Shark((x_temporaire,y_temporaire))
+                        new_shark = Shark(position_tempraire,valeur_accouchement=self.reproduction_shark, energy=self.requin_energy)
                         self.list_sharks.append(new_shark)
                         self.grid.set_value((animal.get_position()), animal)
-                        self.grid.set_value((x_temporaire,y_temporaire), new_shark)
+                        self.grid.set_value(position_tempraire, new_shark)
                         animal.reset_indice_reproduction()
                     else:
-                        (x_temporaire,y_temporaire) = animal.get_position()
+                        position_tempraire = animal.get_position()
                         animal.set_position(random.choice(scan_cases[0]))
                         self.grid.set_value((animal.get_position()), animal)
-                        self.grid.set_value((x_temporaire,y_temporaire), 0)
+                        self.grid.set_value(position_tempraire, 0)
                         animal.incrementation_indice_reproduction()
             elif isinstance(self.grid.get_value(animal.position), Fish):
                 if scan_cases[0]!=[]:
                     if animal.possibilite_reproduction():
-                        (x_temporaire,y_temporaire) = animal.get_position()
+                        position_tempraire = animal.get_position()
                         animal.set_position(random.choice(scan_cases[0]))
                         animal.reset_indice_reproduction()
-                        new_fish = Fish((x_temporaire,y_temporaire))
+                        new_fish = Fish(position_tempraire,valeur_accouchement=self.reproduction_fish)
                         self.list_fishes.append(new_fish)
                         self.grid.set_value((animal.get_position()), animal)
-                        self.grid.set_value((x_temporaire,y_temporaire), new_fish)
+                        self.grid.set_value(position_tempraire, new_fish)
                     else:
-                        (x_temporaire,y_temporaire) = animal.get_position()
+                        position_tempraire = animal.get_position()
                         animal.set_position(random.choice(scan_cases[0]))
                         animal.incrementation_indice_reproduction()
                         self.grid.set_value((animal.get_position()), animal)
-                        self.grid.set_value((x_temporaire,y_temporaire), 0)
+                        self.grid.set_value(position_tempraire, 0)
                 
-
-
+if "__main__" == __name__:
+    new_world = World(3,1,3,3,15,11,13)
+    new_world.placer_les_animaux_initialement()
+    print(f"{new_world.list_sharks[0].energy=}\n{new_world.list_sharks[0].valeur_accouchement=}\n\n{new_world.list_fishes[0].valeur_accouchement=}")
 # if __name__ == "__main__":
 #     # Exemple d'utilisation
 #     new_world = World(1,1)

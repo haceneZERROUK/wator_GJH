@@ -1,5 +1,3 @@
-import random
-import bassin
 from world import World
 import os
 import time
@@ -7,19 +5,24 @@ clear = lambda: os.system("cls" if os.name == "nt" else "clear")
 
 CONSTANTES = 0
 
-NBRE_FISH_INITAL = 70
-NBRE_SHARK_INITAL = 30
+NBRE_FISH_INITAL = 120
+REPRO_FISH_INITAL = 2
+NBRE_SHARK_INITAL = 40
+REPRO_SHARK_INITAL = 13
+ENERGY_REQUIN_INITIAL = 10
 
 
 
-new_world = World(NBRE_FISH_INITAL, NBRE_SHARK_INITAL)
+new_world = World(NBRE_FISH_INITAL,
+                  NBRE_SHARK_INITAL,
+                  requin_energy=ENERGY_REQUIN_INITIAL,
+                  reproduction_fish=REPRO_FISH_INITAL,
+                  reproduction_shark=REPRO_SHARK_INITAL)
 new_world.placer_les_animaux_initialement()
 new_world.grid.print_grid()
 print()
 
 while True:
-
-    time.sleep(0.3)
     
 
     if new_world.list_sharks == [] or new_world.list_fishes == []:
