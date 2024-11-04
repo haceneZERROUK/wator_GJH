@@ -1,13 +1,16 @@
-def generate_wator_table(col, row):
+from fish import Fish
+from shark import Shark
+
+def generate_wator_table(lignes, colonnes):
     table = []
-    for i in range(row):
-        table.append([0] * col)  # Utilisation de la multiplication pour créer des listes
+    for i in range(lignes):
+        table.append([0] * colonnes)  # Utilisation de la multiplication pour créer des listes
     return table
 
 
 class Grid:
     
-    def __init__(self, colone:int, ligne:int):
+    def __init__(self, ligne:int, colonne:int):
         """
         Initialise une instance de Grid.
 
@@ -15,9 +18,9 @@ class Grid:
             colone (int): Le nombre de colonnes dans la grille.
             ligne (int): Le nombre de lignes dans la grille.
         """
-        self.colone = colone
+        self.colonne = colonne
         self.ligne = ligne
-        self.bassin = generate_wator_table(colone, ligne)
+        self.bassin = generate_wator_table(ligne, colonne)
         self.form_table = []
 
     def get_value(self, pos:tuple) -> int|object|None:
@@ -30,9 +33,9 @@ class Grid:
         Returns:
             int | object | None: La valeur à la position spécifiée, ou None si la position est invalide.
         """
-        line = pos[0]
-        col = pos[1]
-        return self.bassin[line][col]
+        ligne = pos[0]
+        colonne = pos[1]
+        return self.bassin[ligne][colonne]
     
     def set_value(self, pos:tuple, value: object|int) -> None:
         """
@@ -42,9 +45,9 @@ class Grid:
             pos (tuple): Un tuple contenant les coordonnées (ligne, colonne).
             value (object | int): La valeur à assigner à la position spécifiée.
         """
-        line = pos[0]
-        col = pos[1]
-        self.bassin[line][col] = value
+        ligne = pos[0]
+        colonne = pos[1]
+        self.bassin[ligne][colonne] = value
 
 
 
@@ -52,33 +55,53 @@ class Grid:
         for ligne_grid in self.bassin:
             for colonne_grid in ligne_grid:
                 if isinstance(colonne_grid , Shark):
-                    self.form_table.append('S')
+                    self.form_table.append('\U0001F988')
                 elif isinstance(colonne_grid, Fish):
-                    self.form_table.append('F')
+                    self.form_table.append('\U0001F41F')
                 elif colonne_grid == 0:
-                    self.form_table.append('0')
+                    self.form_table.append('\U0001F30A')
+                
                 else:
                     ValueError()
  
 
 
+    # def print_grid(self) -> str:
+    #     """
+    #     Affiche la grille sous forme de chaîne de caractères.
 
-    def print_grid(self) -> str:
-        """
-        Affiche la grille sous forme de chaîne de caractères.
+    #     Returns:
+    #         str: Représentation textuelle de la grille.
+    #     """
+    #     Grid.generate_alternative_grid(self)
+    #     new_str = ""
+    #     for col in range(self.ligne):
+    #         for index in range(self.colonne):
+    #             new_str += f"{self.form_table[col]}"
+    #             if index == self.ligne -1:
+    #                 new_str += "\n"
+    #     print(new_str)
 
-        Returns:
-            str: Représentation textuelle de la grille.
-        """
-        new_str = ""
-        for index in range(self.ligne):
-            new_str += f"{self.form_table[index]}"
-            if index < self.ligne -1:
-                new_str += "\n"
-        print(new_str)
+
+    def print_grid(self):
+        for ligne in self.bassin:
+            for colonne in ligne:
+                if isinstance(colonne, Shark):
+                    print('\U0001F99E', end = ' ')
+                elif isinstance(colonne, Fish):
+                    print('\U0001F420', end = ' ')
+                else:
+                    print('\U0001F30A', end = ' ')
+
+            print ('')
+
+
     
-if __name__ == "__main__":
-    # Exemple d'utilisation
-    new_world = Grid(3,3)
-    new_world.print_grid()
+    # def screen_pygame(self):
     
+
+# if __name__ == "__main__":
+#     # Exemple d'utilisation
+#     new_world = Grid(5,4)
+#     print(new_world.bassin)
+#     new_world.print_grid()
