@@ -55,13 +55,15 @@ class Grid:
         for ligne_grid in self.bassin:
             for colonne_grid in ligne_grid:
                 if isinstance(colonne_grid , Shark):
-                    self.form_table.append('S')
+                    self.form_table.append('\U0001F988')
                 elif isinstance(colonne_grid, Fish):
-                    self.form_table.append('F')
+                    self.form_table.append('\U0001F41F')
                 elif colonne_grid == 0:
-                    self.form_table.append('0')
+                    self.form_table.append('\U0001F30A')
+                
                 else:
                     ValueError()
+ 
 
 
     # def print_grid(self) -> str:

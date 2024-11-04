@@ -47,7 +47,7 @@ class World:
                     new_shark = Shark((generate_line,generate_col))
                     self.grid.set_value((generate_line,generate_col), new_shark)
                     self.list_sharks.append(new_shark)
-        
+
 
     def scan_cases_autour(self, position:tuple):
         scan_eau=[]
