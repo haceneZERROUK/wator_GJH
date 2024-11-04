@@ -87,19 +87,19 @@ class Grid:
         for ligne in self.bassin:
             for colonne in ligne:
                 if isinstance(colonne, Shark):
-                    print('\U0001F99E', end = ' ')
+                    if colonne.chronon <5:
+                        print('\U0001F990', end = ' ')
+                    else :
+                        print('\U0001F99E', end = ' ')
                 elif isinstance(colonne, Fish):
-                    print('\U0001F420', end = ' ')
+                    if colonne.chronon <5:
+                        print('\U0001F421', end = ' ')
+                    else:
+                        print('\U0001F420', end = ' ')
                 else:
                     print('\U0001F30A', end = ' ')
 
             print ('')
-
-
-    
-    # def screen_pygame(self):
-    
-
 # if __name__ == "__main__":
 #     # Exemple d'utilisation
 #     new_world = Grid(5,4)
