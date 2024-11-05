@@ -64,23 +64,6 @@ class Grid:
                     ValueError()
 
 
-    # def print_grid(self) -> str:
-    #     """
-    #     Affiche la grille sous forme de chaîne de caractères.
-
-    #     Returns:
-    #         str: Représentation textuelle de la grille.
-    #     """
-    #     Grid.generate_alternative_grid(self)
-    #     new_str = ""
-    #     for col in range(self.ligne):
-    #         for index in range(self.colonne):
-    #             new_str += f"{self.form_table[col]}"
-    #             if index == self.ligne -1:
-    #                 new_str += "\n"
-    #     print(new_str)
-
-
     def print_grid(self):
         for ligne in self.bassin:
             for colonne in ligne:
@@ -98,8 +81,3 @@ class Grid:
                     print('\U0001F30A', end = ' ')
 
             print ('')
-# if __name__ == "__main__":
-#     # Exemple d'utilisation
-#     new_world = Grid(5,4)
-#     print(new_world.bassin)
-#     new_world.print_grid()
