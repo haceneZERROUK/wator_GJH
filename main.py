@@ -1,5 +1,5 @@
 import random
-import bassin
+from bassin import Grid
 from world import World
 import os
 import time
@@ -7,9 +7,8 @@ clear = lambda: os.system("cls" if os.name == "nt" else "clear")
 
 CONSTANTES = 0
 
-NBRE_FISH_INITAL = 70
-NBRE_SHARK_INITAL = 30
-
+NBRE_FISH_INITAL = 5
+NBRE_SHARK_INITAL = 2
 
 
 new_world = World(NBRE_FISH_INITAL, NBRE_SHARK_INITAL)
@@ -19,7 +18,8 @@ print()
 
 while True:
 
-    time.sleep(0.3)
+    time.sleep(0.5)
+
     
 
     if new_world.list_sharks == [] or new_world.list_fishes == []:
@@ -36,6 +36,6 @@ while True:
         new_world.check_death_and_kill(animal)
     clear()
     new_world.grid.print_grid()
-    print(len(new_world.list_fishes))
-    print(len(new_world.list_sharks))
-    print()
+    size_list_fish = len(new_world.list_fishes)
+    size_list_shark  = len(new_world.list_sharks)
+

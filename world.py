@@ -1,10 +1,10 @@
 import random
 from fish import Fish
 from shark import Shark
-import bassin
+from bassin import Grid
 
-COLONNE = 50
-LIGNE = 50
+COLONNE = 12
+LIGNE = 12
 # def generate_wator_table(col, row):
 #     table = []
 #     for i in range(col):
@@ -17,7 +17,7 @@ class World:
     def __init__(self, nombre_de_poissons_initial, nombre_de_requins_initial, ligne = LIGNE, colonne = COLONNE):
         self.ligne = ligne
         self.colonne = colonne
-        self.grid = bassin.Grid(ligne,colonne)
+        self.grid = Grid(ligne,colonne)
         self.list_fishes = []
         self.list_sharks = []
         self.nombre_de_requins_initial = nombre_de_requins_initial
@@ -80,10 +80,10 @@ class World:
                     (x_poisson_mange,y_poisson_mange) = random.choice(scan_cases[1])
                     if animal.possibilite_reproduction():
                         (x_temporaire,y_temporaire) = animal.get_position()
-                        print((x_temporaire,y_temporaire))
                         self.list_fishes.remove(self.grid.get_value((x_poisson_mange,y_poisson_mange)))
                         animal.set_position((x_poisson_mange,y_poisson_mange))
                         new_shark = Shark((x_temporaire,y_temporaire))
+                    
                         self.list_sharks.append(new_shark)
                         self.grid.set_value((x_poisson_mange,y_poisson_mange),animal)
                         self.grid.set_value((x_temporaire,y_temporaire), new_shark)

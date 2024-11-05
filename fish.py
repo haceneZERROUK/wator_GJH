@@ -47,3 +47,8 @@ class Fish:
             tuple: La position du poisson sous forme de tuple (x, y).
         """
         return self.position
+    
+    def get_chronon(self):
+        
+        return self.chronon
+
