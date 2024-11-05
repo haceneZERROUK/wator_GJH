@@ -9,7 +9,7 @@ NBRE_FISH_INITAL = 120
 REPRO_FISH_INITAL = 2
 NBRE_SHARK_INITAL = 40
 REPRO_SHARK_INITAL = 13
-ENERGY_REQUIN_INITIAL = 10
+ENERGY_REQUIN_INITIAL = 8
 
 
 
@@ -21,7 +21,7 @@ new_world = World(NBRE_FISH_INITAL,
 new_world.placer_les_animaux_initialement()
 new_world.grid.print_grid()
 print()
-
+counter = 0
 while True:
     
 
@@ -41,4 +41,7 @@ while True:
     new_world.grid.print_grid()
     print(len(new_world.list_fishes))
     print(len(new_world.list_sharks))
+    print()
+    counter += 1
+    print(f"{counter=}")
     print()
