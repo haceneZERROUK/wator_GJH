@@ -47,7 +47,7 @@ def draw_fish(x, y):
     # Calcul des coordonnées de la cellule
     cell_x = x * GRID_SIZE_HEIGHT
     cell_y = y * GRID_SIZE_WIDTH
-    screen.blit(pygame.transform.scale(images[1], (min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT)-10, min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT)-10)), (cell_x+GRID_SIZE_HEIGHT//2-min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT)//2, cell_y+5))
+    screen.blit(pygame.transform.scale(images[1], (min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT)-10, min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT)-10)), (cell_x+GRID_SIZE_HEIGHT//2-(min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT)-10)//2, cell_y+5))
     # pygame.draw.circle(screen, (41, 233, 59), (cell_x, cell_y), 10)  # Dessine un cercle rouge
 def draw_shark(x, y):
     # Calcul des coordonnées de la cellule
@@ -86,7 +86,7 @@ pygame.font.init()
 police = pygame.font.Font(None, 36)
 
 while True:
-    time.sleep(0.5)
+    time.sleep(0.1)
     screen.fill(WHITE)
     draw_grid()
     if new_world.list_sharks == [] or new_world.list_fishes == []:
