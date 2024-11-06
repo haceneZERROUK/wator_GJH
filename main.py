@@ -96,9 +96,10 @@ music = pygame.mixer.Sound("song_theme.mp3")
 music.play(loops= - 1, maxtime= 0)
 police = pygame.font.Font(None, 24)
 
+
+
 while True:
     time.sleep(0.5)
-    # screen.fill(BLUE)
     screen.blit(images[2], (0,0))
     draw_grid()
     if new_world.list_sharks == [] or new_world.list_fishes == []:

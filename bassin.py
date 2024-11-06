@@ -1,30 +1,24 @@
 from fish import Fish
 from shark import Shark
 
-# def generate_wator_table(lignes, colonnes):
-#     table = []
-#     for i in range(lignes):
-#         table.append([0] * colonnes)  # Utilisation de la multiplication pour créer des listes
-#     return table
-
 
 class Grid:
 
 
     def __init__(self, ligne:int, colonne:int):
         """
-        Initialise une instance de Grid.
+        Initializes the grid environment with the specified dimensions.
 
-        Args:
-            colone (int): Le nombre de colonnes dans la grille.
-            ligne (int): Le nombre de lignes dans la grille.
+        Parameters:
+            ligne (int): The number of rows in the grid.
+            colonne (int): The number of columns in the grid.
         """
         self.colonne = colonne
         self.ligne = ligne
         self.bassin = self.generate_wator_table(ligne, colonne)
         self.form_table = []
 
-    # @staticmethod
+
     def generate_wator_table(self, ligne, colonne):
         table = []
         for i in range(ligne):
@@ -34,13 +28,13 @@ class Grid:
 
     def get_value(self, pos:tuple) -> int|object|None:
         """
-        Retourne la valeur à la position spécifiée dans la grille.
+        Returns the value or object at the specified position in the grid.
 
-        Args:
-            pos (tuple): Un tuple contenant les coordonnées (ligne, colonne).
+        Parameters:
+            pos (tuple): A tuple (row, column) indicating the grid position.
 
         Returns:
-            int | object | None: La valeur à la position spécifiée, ou None si la position est invalide.
+            int | object | None: The value or object at the given position.
         """
         ligne = pos[0]
         colonne = pos[1]
@@ -48,11 +42,14 @@ class Grid:
     
     def set_value(self, pos:tuple, value: object|int) -> None:
         """
-        Définit la valeur à la position spécifiée dans la grille.
+        Sets the value at a specific position in the grid.
 
-        Args:
-            pos (tuple): Un tuple contenant les coordonnées (ligne, colonne).
-            value (object | int): La valeur à assigner à la position spécifiée.
+        Parameters:
+            pos (tuple): A tuple (row, column) indicating the grid position.
+            value (object | int): The value to set at the given position.
+        
+        Returns:
+            None
         """
         ligne = pos[0]
         colonne = pos[1]
@@ -61,6 +58,19 @@ class Grid:
 
 
     def generate_alternative_grid(self):
+        """
+        Generates a simplified grid representation with symbols for different entities.
+
+        Iterates through the `bassin` grid, replacing:
+            - `Shark` objects with 'S',
+            - `Fish` objects with 'F',
+            - Empty cells (0) with '0'.
+        
+        Updates the `form_table` attribute with these symbols.
+
+        Returns:
+            None
+        """
         for ligne_grid in self.bassin:
             for colonne_grid in ligne_grid:
                 if isinstance(colonne_grid , Shark):
@@ -76,6 +86,16 @@ class Grid:
 
 
     def print_grid(self):
+        """
+        Prints the grid with emoji representations for sharks, fish, and empty cells.
+
+        - Sharks are represented by 🦐 (young) and 🦞 (adult) depending on age.
+        - Fish are represented by 🐡 (young) and 🐠 (adult) depending on age.
+        - Empty cells are represented by 🌊.
+
+        Returns:
+            None
+        """
         for ligne in self.bassin:
             for colonne in ligne:
                 if isinstance(colonne, Shark):
