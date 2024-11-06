@@ -1,15 +1,16 @@
 from fish import Fish
 from shark import Shark
 
-def generate_wator_table(lignes, colonnes):
-    table = []
-    for i in range(lignes):
-        table.append([0] * colonnes)  # Utilisation de la multiplication pour créer des listes
-    return table
+# def generate_wator_table(lignes, colonnes):
+#     table = []
+#     for i in range(lignes):
+#         table.append([0] * colonnes)  # Utilisation de la multiplication pour créer des listes
+#     return table
 
 
 class Grid:
-    
+
+
     def __init__(self, ligne:int, colonne:int):
         """
         Initialise une instance de Grid.
@@ -20,8 +21,16 @@ class Grid:
         """
         self.colonne = colonne
         self.ligne = ligne
-        self.bassin = generate_wator_table(ligne, colonne)
+        self.bassin = self.generate_wator_table(ligne, colonne)
         self.form_table = []
+
+    # @staticmethod
+    def generate_wator_table(self, ligne, colonne):
+        table = []
+        for i in range(ligne):
+            table.append([0] * colonne)  # Utilisation de la multiplication pour créer des listes
+        return table
+
 
     def get_value(self, pos:tuple) -> int|object|None:
         """
