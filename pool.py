@@ -5,24 +5,23 @@ from shark import Shark
 class Grid:
 
 
-    def __init__(self, ligne:int, colonne:int):
+    def __init__(self, row:int, column:int):
         """
         Initializes the grid environment with the specified dimensions.
 
         Parameters:
-            ligne (int): The number of rows in the grid.
-            colonne (int): The number of columns in the grid.
+            row (int): The number of rows in the grid.
+            column (int): The number of columns in the grid.
         """
-        self.colonne = colonne
-        self.ligne = ligne
-        self.bassin = self.generate_wator_table(ligne, colonne)
+        self.column = column
+        self.row = row
+        self.pool = self.generate_wator_table(row, column)
         self.form_table = []
 
-
-    def generate_wator_table(self, ligne, colonne):
+    def generate_wator_table(self, row, column):
         table = []
-        for i in range(ligne):
-            table.append([0] * colonne)  # Utilisation de la multiplication pour créer des listes
+        for i in range(row):
+            table.append([0] * column)
         return table
 
 
@@ -36,9 +35,9 @@ class Grid:
         Returns:
             int | object | None: The value or object at the given position.
         """
-        ligne = pos[0]
-        colonne = pos[1]
-        return self.bassin[ligne][colonne]
+        row = pos[0]
+        column = pos[1]
+        return self.pool[row][column]
     
     def set_value(self, pos:tuple, value: object|int) -> None:
         """
@@ -51,9 +50,9 @@ class Grid:
         Returns:
             None
         """
-        ligne = pos[0]
-        colonne = pos[1]
-        self.bassin[ligne][colonne] = value
+        row = pos[0]
+        column = pos[1]
+        self.pool[row][column] = value
 
 
 
@@ -61,7 +60,7 @@ class Grid:
         """
         Generates a simplified grid representation with symbols for different entities.
 
-        Iterates through the `bassin` grid, replacing:
+        Iterates through the `pool` grid, replacing:
             - `Shark` objects with 'S',
             - `Fish` objects with 'F',
             - Empty cells (0) with '0'.
@@ -71,13 +70,13 @@ class Grid:
         Returns:
             None
         """
-        for ligne_grid in self.bassin:
-            for colonne_grid in ligne_grid:
-                if isinstance(colonne_grid , Shark):
+        for row_grid in self.pool:
+            for column_grid in row_grid:
+                if isinstance(column_grid , Shark):
                     self.form_table.append('\U0001F988')
-                elif isinstance(colonne_grid, Fish):
+                elif isinstance(column_grid, Fish):
                     self.form_table.append('\U0001F41F')
-                elif colonne_grid == 0:
+                elif column_grid == 0:
                     self.form_table.append('\U0001F30A')
                 
                 else:
@@ -96,15 +95,15 @@ class Grid:
         Returns:
             None
         """
-        for ligne in self.bassin:
-            for colonne in ligne:
-                if isinstance(colonne, Shark):
-                    if colonne.chronon <5:
+        for row in self.pool:
+            for column in row:
+                if isinstance(column, Shark):
+                    if column.chronon <5:
                         print('\U0001F990', end = ' ')
                     else :
                         print('\U0001F99E', end = ' ')
-                elif isinstance(colonne, Fish):
-                    if colonne.chronon <5:
+                elif isinstance(column, Fish):
+                    if column.chronon <5:
                         print('\U0001F421', end = ' ')
                     else:
                         print('\U0001F420', end = ' ')

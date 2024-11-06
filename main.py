@@ -1,5 +1,5 @@
 import random
-import bassin
+import pool
 from world import World, ROW, COL
 import os
 import time
@@ -7,26 +7,39 @@ import pygame
 import sys
 clear = lambda: os.system("cls" if os.name == "nt" else "clear")
 
-CONSTANTES = 0
-NBRE_FISH_INITAL = 150
-NBRE_SHARK_INITAL = 25
-chronon_counter = 0
-taille_ecran = (1300,1000)
+
+INITIAL_FISH_NUMBER = 150
+INITIAL_SHARK_NUMBER = 25
+SCREEN_SIZE = (1300,1000)
 GRID_SIZE_HEIGHT = 1000//COL 
 GRID_SIZE_WIDTH = 1000//ROW 
 WIDTH, HEIGHT = COL * GRID_SIZE_HEIGHT , ROW * GRID_SIZE_WIDTH
-FPS = 30  # Nombre de frames par seconde
+FPS = 30  
 
 
 GRID_COLOR = (200, 200, 200)
-new_world = World(NBRE_FISH_INITAL, NBRE_SHARK_INITAL)
-new_world.placer_les_animaux_initialement()
-annee = 0
-screen = pygame.display.set_mode(taille_ecran)
+new_world = World(INITIAL_FISH_NUMBER, INITIAL_SHARK_NUMBER)
+new_world.initial_animal_placing()
+screen = pygame.display.set_mode(SCREEN_SIZE)
 pygame.display.set_caption("Programme Wa Tor par JHG")
 
-# Fonction pour dessiner le quadrillage
+# Grid drawing function
 def draw_grid():
+    """
+    Draws a grid on the screen with vertical and horizontal lines.
+
+    The grid lines are spaced according to GRID_SIZE_HEIGHT (for vertical lines)
+    and GRID_SIZE_WIDTH (for horizontal lines), and are drawn using GRID_COLOR.
+
+    Assumes the existence of the following constants:
+        - WIDTH, HEIGHT: Screen dimensions.
+        - GRID_SIZE_HEIGHT, GRID_SIZE_WIDTH: Grid line spacing.
+        - GRID_COLOR: Color of the grid lines.
+        - screen: The pygame surface to draw on.
+
+    Returns:
+        None
+    """
     for x in range(0, WIDTH+1, GRID_SIZE_HEIGHT):
         pygame.draw.line(screen, GRID_COLOR, (x, 0), (x, HEIGHT))
     for y in range(0, HEIGHT+1, GRID_SIZE_WIDTH):
@@ -39,10 +52,26 @@ for path in image_path:
     os.path.exists(path)
     images.append(pygame.image.load(path))
 
-# Fonction pour dessiner un objet (par exemple un cercle) dans une cellule
+
 def draw_fish(x, y):
-    
-    # Calcul des coordonnées de la cellule
+    """
+    Draws a scaled fish icon at the specified grid position (x, y).
+
+    The fish icon is scaled to fit within the grid cell, with a small margin.
+    The icon is then drawn on the screen at the calculated position.
+
+    Args:
+        x (int): The horizontal grid position.
+        y (int): The vertical grid position.
+
+    Assumes the existence of the following:
+        - GRID_SIZE_HEIGHT, GRID_SIZE_WIDTH: Grid cell dimensions.
+        - images[1]: The fish icon image.
+        - screen: The pygame surface to draw on.
+
+    Returns:
+        None
+    """
     cell_x = x * GRID_SIZE_HEIGHT
     cell_y = y * GRID_SIZE_WIDTH
     icon_size = ((min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT) -10) , (min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT) -10))
@@ -52,7 +81,24 @@ def draw_fish(x, y):
 
 
 def draw_shark(x, y):
-    # Calcul des coordonnées de la cellule
+    """
+    Draws a scaled shark icon at the specified grid position (x, y).
+
+    The shark icon is scaled to fit within the grid cell, with a small margin.
+    The icon is then drawn on the screen at the calculated position.
+
+    Args:
+        x (int): The horizontal grid position.
+        y (int): The vertical grid position.
+
+    Assumes the existence of the following:
+        - GRID_SIZE_HEIGHT, GRID_SIZE_WIDTH: Grid cell dimensions.
+        - images[0]: The shark icon image.
+        - screen: The pygame surface to draw on.
+
+    Returns:
+        None
+    """
     cell_x = x * GRID_SIZE_HEIGHT
     cell_y = y * GRID_SIZE_WIDTH
     icon_size = ((min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT) -10) , (min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT) -10))
@@ -60,34 +106,8 @@ def draw_shark(x, y):
 
     screen.blit(pygame.transform.scale(images[0], (icon_size[0], icon_size[1])), (icon_position[0], icon_position [1]))
 
-def main():
-    clock = pygame.time.Clock()
+text_color = (255, 255, 255)
 
-    while True:
-
-        
-        
-        # Dessiner le quadrillage
-        draw_grid()
-
-        for fish in new_world.list_fishes:
-            draw_fish(fish.get_position()[1], fish.get_position()[0])
-        for shark in new_world.list_sharks:
-            draw_shark(shark.get_position()[1], shark.get_position()[0])
-        # Gestion des événements (quitter, etc.)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-        pygame.display.flip()  # Mettre à jour l'affichage
-        clock.tick(FPS)  # Limiter le no
-
-
-
-
-couleur_texte = (255, 255, 255)
-        # Dessiner le quadrillage
 draw_grid()
 pygame.font.init()
 pygame.mixer.init()
@@ -105,23 +125,19 @@ while True:
     if new_world.list_sharks == [] or new_world.list_fishes == []:
         break
     for animal in new_world.list_fishes:
-        new_world.scan_cases_autour(animal.get_position())
+        new_world.surrounding_scan(animal.get_position())
         new_world.move_and_reproduction(animal)
-        animal.incrementation_chronon()
+        animal.chronon_increment()
     for animal in new_world.list_sharks:
-        new_world.scan_cases_autour(animal.get_position())
+        new_world.surrounding_scan(animal.get_position())
         new_world.move_and_reproduction(animal)
-        animal.perte_energy()
-        animal.incrementation_chronon()
+        animal.energy_loss()
+        animal.chronon_increment()
         new_world.check_death_and_kill(animal)
-    annee+=1
     clear()
     new_world.grid.print_grid()
-    texte = police.render(f"Nb poissons : {len(new_world.list_fishes)}", True, couleur_texte)
-    texte2 = police.render(f"Nb requins : {len(new_world.list_sharks)}", True, couleur_texte)
-    print(len(new_world.list_fishes))
-    print(len(new_world.list_sharks))
-    print(annee)
+    fish_number = police.render(f"Fish number : {len(new_world.list_fishes)}", True, text_color)
+    shark_number = police.render(f"Shark number : {len(new_world.list_sharks)}", True, text_color)
     for animal in new_world.list_fishes:
         draw_fish(animal.get_position()[1], animal.get_position()[0])
     for animal in new_world.list_sharks:
@@ -143,18 +159,18 @@ while True:
     mean_age_sharks = int(total_chronon_shark / len(new_world.list_sharks))
     mean_age_fishes = int(total_chronon_fish / len(new_world.list_fishes))
 
-    texte3 = police.render(f"age moyen des poissons:", True, couleur_texte)
-    texte5 = police.render(f'{mean_age_fishes}', True, couleur_texte)
-    texte4 = police.render(f"age moyen des requins:", True, couleur_texte)
-    texte6 = police.render(f'{mean_age_sharks}', True, couleur_texte)
+    average_fish_age_display = police.render(f"Average fish age:", True, text_color)
+    average_fish_age_var_display = police.render(f'{mean_age_fishes}', True, text_color)
+    average_shark_age_display = police.render(f"Average shark age:", True, text_color)
+    average_shar_age_var_display = police.render(f'{mean_age_sharks}', True, text_color)
 
 
-    screen.blit(texte, (1050,100))
-    screen.blit(texte2, (1050,150))
-    screen.blit(texte3, (1050,200))
-    screen.blit(texte5, (1050,225))
-    screen.blit(texte4, (1050,250))
-    screen.blit(texte6, (1050,275))
+    screen.blit(fish_number, (1050,100))
+    screen.blit(shark_number, (1050,150))
+    screen.blit(average_fish_age_display, (1050,200))
+    screen.blit(average_fish_age_var_display, (1050,225))
+    screen.blit(average_shark_age_display, (1050,250))
+    screen.blit(average_shar_age_var_display, (1050,275))
 
 
     pygame.display.flip()

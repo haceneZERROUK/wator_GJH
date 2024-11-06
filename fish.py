@@ -1,25 +1,25 @@
 class Fish:
-    def __init__(self, position : tuple, valeur_accouchement = 2, chronon = 0 ):
+    def __init__(self, position : tuple, childbirth_value = 2, chronon = 0 ):
         """
         A class representing a fish with attributes related to its position, reproduction, and age.
 
         Attributes:
             position (tuple): A tuple representing the position of the fish (e.g., (x, y) coordinates).
-            valeur_accouchement (int): The reproduction value, indicating the number of offspring the fish can have at reproduction. Default is 2.
-            indice_reproduction (int): A counter or indicator of the fish's reproduction cycle. Default is 0.
+            childbirth_value (int): The reproduction value, indicating the number of offspring the fish can have at reproduction. Default is 2.
+            reproduction_index (int): A counter or indicator of the fish's reproduction cycle. Default is 0.
             chronon (int): A time or age indicator for the fish. Default is 0.
 
         Methods:
-            __init__(self, position: tuple, valeur_accouchement=2, chronon=0):
+            __init__(self, position: tuple, childbirth_value=2, chronon=0):
                 Initializes a new fish with the given position, reproduction value, and age.
         """
         self.position = position
-        self.valeur_accouchement = valeur_accouchement
-        self.indice_reproduction = 0
+        self.childbirth_value = childbirth_value
+        self.reproduction_index = 0
         self.chronon = chronon
 
 
-    def incrementation_chronon(self):
+    def chronon_increment(self):
         """
         Increments the age or time indicator (chronon) of the fish by 1.
 
@@ -32,31 +32,31 @@ class Fish:
         """
         self.chronon += 1
 
-    def incrementation_indice_reproduction(self):
+    def reproduction_index_increment(self):
         """
-        Increments the reproduction index (indice_reproduction) of the fish by 1.
+        Increments the reproduction index (reproduction_index) of the fish by 1.
 
-        This method updates the `indice_reproduction` attribute, which tracks the fish's reproduction cycle or readiness for reproduction.
+        This method updates the `reproduction_index` attribute, which tracks the fish's reproduction cycle or readiness for reproduction.
 
-        No parameters are required as it operates on the instance's `indice_reproduction` attribute directly.
+        No parameters are required as it operates on the instance's `reproduction_index` attribute directly.
 
         Returns:
             None
         """
-        self.indice_reproduction += 1
+        self.reproduction_index += 1
 
-    def reset_indice_reproduction(self):
+    def reset_reproduction_index(self):
         """
-        Resets the reproduction index (indice_reproduction) of the fish to 0.
+        Resets the reproduction index (reproduction_index) of the fish to 0.
 
-        This method sets the `indice_reproduction` attribute back to 0, typically used after the fish has reproduced or completed a reproduction cycle.
+        This method sets the `reproduction_index` attribute back to 0, typically used after the fish has reproduced or completed a reproduction cycle.
 
-        No parameters are required as it operates on the instance's `indice_reproduction` attribute directly.
+        No parameters are required as it operates on the instance's `reproduction_index` attribute directly.
 
         Returns:
             None
         """
-        self.indice_reproduction = 0
+        self.reproduction_index = 0
 
     def set_position(self, tuple_position):
         """
@@ -72,17 +72,17 @@ class Fish:
         """
         self.position = (tuple_position)
     
-    def possibilite_reproduction(self):
+    def reproduction_possibility(self):
         """
         Checks if the fish is eligible for reproduction.
 
-        This method compares the fish's reproduction index (`indice_reproduction`) with its reproduction threshold (`valeur_accouchement`).
+        This method compares the fish's reproduction index (`reproduction_index`) with its reproduction threshold (`childbirth_value`).
         If the reproduction index is greater than or equal to the threshold, the fish is considered ready to reproduce.
 
         Returns:
             bool: `True` if the fish's reproduction index is greater than or equal to its reproduction threshold, `False` otherwise.
         """
-        return self.indice_reproduction >= self.valeur_accouchement
+        return self.reproduction_index >= self.childbirth_value
 
     def get_position(self):
         """
@@ -96,6 +96,14 @@ class Fish:
         return self.position
     
     def get_chronon(self):
-        
+        """
+        Retrieves the current chronon value.
+
+        This method returns the value of the chronon attribute, which represents
+        the current time or state within a time-based or event-driven system.
+
+        Returns:
+            The current value of the chronon (data type depends on the attribute).
+        """
         return self.chronon
 
