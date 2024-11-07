@@ -23,7 +23,7 @@ Welcome to **Wator**, an immersive simulator that recreates a vibrant marine eco
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/wator.git
+   git clone https://github.com/haceneZERROUK/wator_GJH/
    cd wator
    ```
 

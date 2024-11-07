@@ -3,9 +3,8 @@ from fish import Fish
 from shark import Shark
 from pool import Grid
 
-COL = 100
-ROW = 100
-
+COL = 50
+ROW = 50
 
 class World:
 
