@@ -94,10 +94,10 @@ class World:
         shark_scan=[]
         fish_scan=[]
         directions = [
-            ((position[0] - 1) % ROW, position[1]), # Up
-            ((position[0] + 1) % ROW,position[1]), # Down
-            (position[0],(position[1] - 1) % COL), # Left
-            (position[0],(position[1] + 1) % COL) # Right
+            ((position[0] - 1) % self.row, position[1]), # Up
+            ((position[0] + 1) % self.row,position[1]), # Down
+            (position[0],(position[1] - 1) % self.columns), # Left
+            (position[0],(position[1] + 1) % self.columns) # Right
         ]
         for coord in directions:
             if self.grid.get_value(coord) == 0:

@@ -7,11 +7,8 @@ class ToolsWorld:
         self.name = "ToolsWorld"
         # Valeurs par défaut pour les paramètres facultatifs
         self.default_params = {
-            "ligne": 3,
-            "colonne": 3,
-            "requin_energy": 8,
-            "reproduction_fish": 2,
-            "reproduction_shark": 13,
+            "row": 3,
+            "columns": 3
         }
 
     def create_world(self, number_fish, number_sharks, **kwargs):
@@ -37,42 +34,39 @@ class ToolsWorld:
         
         # Création de l'instance de World avec les paramètres requis et facultatifs
         return World(
-            nombre_de_poissons_initial=number_fish,
-            nombre_de_requins_initial=number_sharks,
-            ligne=params["ligne"],
-            colonne=params["colonne"],
-            requin_energy=params["requin_energy"],
-            reproduction_fish=params["reproduction_fish"],
-            reproduction_shark=params["reproduction_shark"]
+            initial_fish_number=number_fish,
+            initial_shark_number=number_sharks,
+            row=params["row"],
+            columns=params["columns"],
         )
     
     def place_animals(self,world):
-        world.placer_les_animaux_initialement()
+        world.initial_animal_placing()
         world_copy = copy.deepcopy(world)
         return world_copy
     def area(self,world):
-        return world.ligne * world.colonne
+        return world.row * world.columns
     def sum_shark_and_fish(self,world):
-        return world.nombre_de_poissons_initial + world.nombre_de_requins_initial
+        return world.initial_fish_number + world.initial_shark_number
     
     def number_less_than_or_equal_to_the_size_of_the_grid(self,world):
         return self.sum_shark_and_fish(world) <= self.area(world)
-    def get_grid_bassin(self, world):
+    def get_grid_pool(self, world):
         if world.grid is None:
             raise ValueError("Le monde n'a pas été correctement initialisé : l'attribut 'grid' est None.")
-        return world.grid.bassin
+        return world.grid.pool
     def search_grid(self,world,focus)-> list[int|object]:
         list_focus = []
         if not isinstance(focus,object):
-            for raw in self.get_grid_bassin(world):
-                for col in raw:
+            for row in self.get_grid_pool(world):
+                for col in row:
                     if col == 0:
                         list_focus.append(0)
                     else:
                         ValueError("Valeur étrangére non prévu")
         else:
-            for raw in self.get_grid_bassin(world):
-                for col in raw:
+            for row in self.get_grid_pool(world):
+                for col in row:
                     if type(col) == focus:  # noqa: E721
                         list_focus.append(col)
         return list_focus
@@ -94,7 +88,7 @@ class ToolsWorld:
     def get_first_fish(self,world):
         return self.get_list_fishes(world)[0]
     def get_chronon_animal(self,animal):
-        return animal.chronon
+        return animal.get_chronon()
     def is_len_zero_fishes(self,world):
         return self.len_list_fishes(world) == 0
     def is_len_zero_sharks(self, world):
@@ -109,7 +103,8 @@ class ToolsWorld:
     def get_pos_animal(self,animal):
         return animal.get_position()
     def get_box_around(self,world,position):
-        return world.scan_cases_autour(position)
+        print(f"{world.surrounding_scan(position)=}")
+        return world.surrounding_scan(position)
     def scan_box_around_animal(self,world,animal):
         return self.get_box_around(world,self.get_pos_animal(animal))
     def move_animal(self, world, animal):
@@ -131,7 +126,7 @@ class ToolsWorld:
         return self.get_chronon_animal(animal) > 0
     def convert_mature_animal(self, animal):
         if not self.is_mature_animal(animal):
-            animal.incrementation_chronon()  # Augmente le chronon si l'animal n'est pas mature
+            animal.chronon_increment() # Augmente le chronon si l'animal n'est pas mature
         return animal  # Retourne l'animal sans faire de copie
     def check_animal_mature_move(self, world,animal):
         animal_copy = self.convert_mature_animal(animal)
