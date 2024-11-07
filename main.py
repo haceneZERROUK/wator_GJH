@@ -28,11 +28,9 @@ while True:
     if new_world.list_sharks == [] or new_world.list_fishes == []:
         break
     for animal in new_world.list_fishes:
-        new_world.scan_cases_autour(animal.get_position())
         new_world.move_and_reproduction(animal)
         animal.incrementation_chronon()
     for animal in new_world.list_sharks:
-        new_world.scan_cases_autour(animal.get_position())
         new_world.move_and_reproduction(animal)
         animal.perte_energy()
         animal.incrementation_chronon()
