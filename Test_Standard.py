@@ -8,10 +8,10 @@ class TestRunner:
     RESET = '\033[0m'   # Reset
 
     def __init__(self, test_classes):
-        self.test_classes = test_classes  # Liste des classes de test
-        self.total_tests = 0  # Nombre total de tests réussis et échoués
-        self.total_success = 0  # Nombre total de tests réussis
-        self.total_failures = 0  # Nombre total de tests échoués
+        self.test_classes = test_classes
+        self.total_tests = 0  
+        self.total_success = 0  
+        self.total_failures = 0  
 
     def run(self, debug=False):
         """Exécute les tests dans les classes spécifiées.
