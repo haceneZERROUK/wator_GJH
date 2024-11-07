@@ -1,29 +1,105 @@
-# Wator - Le Simulateur Aquatique qui N'a Pas Peur de Nager !
+# Wator - The Dynamic Aquatic Simulator 🌊
 
-![Wator Logo](https://via.placeholder.com/150)
+Welcome to **Wator**, an immersive simulator that recreates a vibrant marine ecosystem. In Wator, sharks roam, fish swim, and the survival of the fittest determines who dominates the ocean. Dive in and witness this compelling battle for life in the open sea!
 
-Bienvenue dans le monde merveilleux de Wator, où les poissons nagent, les requins chassent, et où la vie marine est plus excitante qu'un épisode de votre série préférée !
+---
 
-## À propos du projet
+## 🌟 Features
 
-Wator est un simulateur qui recrée l'écosystème marin. Dans ce projet, nous observons la lutte pour la survie entre poissons et requins. Est-ce que le poisson clown va enfin devenir le héros qu’il mérite d’être ? Seul Wator peut nous le dire !
+- **Dynamic Ecosystem**: A constantly changing world where sharks and fish interact based on hunger, energy, and reproduction cycles.
+- **Realistic Simulation**: Animals have lifelike behaviors such as moving, eating, and reproducing.
+- **Infinite Loop Simulation**: A continuous simulation to observe the cycle of life in real time.
+- **Graphical Interface**: Realistic rendering of marine life using Pygame, with custom visuals and animations.
+- **Grid-based Movement**: A 2D grid where each cell represents a part of the ocean, housing fish, sharks, or water.
 
-## Contributors (ou les grands plongeurs de ce projet) :
+## 🚀 Quick Start
 
-- **Hacene** : Le créateur des poissons ! S'il avait été un poisson, il aurait sûrement été un poisson-lune, tellement il brille.
-- **Gauthier** : Le roi des requins, il sait comment rendre la chasse plus excitante qu’un film d’action.
-- **Jason** : L'architecte du monde marin, il transforme le code en paysage aquatique… sans faire de vagues.
+### Prerequisites
 
-## Fonctionnalités
+- **Python 3.8+**
+- **Pygame** (for graphical simulation)
+  
+### Installation
 
-- 🐟 Simulation réaliste des poissons et des requins
-- 🌊 Écosystème dynamique avec reproduction et prédateur
-- 🔄 Boucles infinies pour une nage sans fin (parfait pour les marins en herbe)
-- 🎨 Graphismes qui feront rougir d’envie les fonds marins
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/haceneZERROUK/wator_GJH/
+   cd wator
+   ```
 
-License
+2. Install required packages:
+   ```bash
+   pip install pygame
+   ```
 
-Ce projet est sous licence Simplon - Merci à Simplon pour nous avoir appris que même dans le code, il faut savoir rester à flot ! 🚤
-Remerciements
+3. Run the simulation:
+   ```bash
+   python main.py
+   ```
 
-Un grand merci à nos contributeurs et à tous ceux qui ont cru en ce projet ! Que les poissons soient avec vous !
+---
+
+## 📂 Project Structure
+
+- **pool.py**: Manages the `Grid` class, responsible for creating and updating the 2D ocean grid.
+- **fish.py**: Contains the `Fish` class, which defines behaviors like moving, reproducing, and aging.
+- **shark.py**: Contains the `Shark` class, a subclass of Fish, adding features like energy management and eating.
+- **world.py**: Houses the `World` class, which initializes the ecosystem, populates the grid, and manages interactions between animals.
+- **main.py**: The main simulation file, handling Pygame rendering, event handling, and real-time updates.
+
+---
+
+## 🐠 Ecosystem Rules
+
+### Animals
+
+- **Fish**:
+  - Move randomly and can reproduce after a set number of steps.
+  - Occupy one cell at a time and aim to avoid predators.
+- **Sharks**:
+  - Hunt fish to maintain energy.
+  - Lose energy over time and must feed to survive.
+  - Reproduce periodically if conditions allow.
+
+### Grid Movement
+
+- Each cell can contain either a shark, fish, or remain empty.
+- Animals interact based on adjacent cells, following specific rules:
+  - **Sharks** prioritize cells with fish.
+  - **Fish** move to empty cells to avoid sharks.
+  
+---
+
+## 🕹️ Controls
+
+The simulation runs in a loop until the shark or fish population is exhausted. Simply observe the graphical display for real-time updates on the ecosystem status!
+
+- **Close Simulation**: Click the close button or press `Ctrl+C` in the terminal.
+- **Pause/Resume**: Pause the simulation by halting the Python script in your IDE, then continue to observe.
+
+---
+
+## 🔄 Life Cycles and Behaviors
+
+- **Chronon**: Each animal ages per chronon, a time unit in the simulation.
+- **Reproduction**: After reaching a threshold chronon count, fish and sharks may reproduce.
+- **Energy for Sharks**: Sharks deplete energy with each chronon. Feeding restores energy, simulating hunting success.
+
+---
+
+## 📜 License
+
+This project is licensed under the **Simplon License**. Thanks to Simplon for providing the inspiration and guidance for this project.
+
+---
+
+## 🙏 Acknowledgments
+
+Special thanks to our contributors and everyone who supported this project. May the fish be ever in your favor!
+
+### Contributors
+
+- **Hacene**: Fish creator, bringing life to the ocean’s colorful residents.
+- **Gauthier**: Shark master, designing thrilling predator behaviors.
+- **Jason**: World architect, creating a harmonious yet thrilling marine environment.
+```
