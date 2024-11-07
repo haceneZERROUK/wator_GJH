@@ -126,11 +126,11 @@ class World:
         if animal.chronon == 0: # to avoid that new fishes move
             pass
         else:
-            scan_cases = self.surrounding_scan(animal.get_position())
+            scan_cells = self.surrounding_scan(animal.get_position())
             if isinstance((self.grid.get_value(animal.position)), Shark): #check if animal is a shark
-                if scan_cases[1]!= []: # check if around the shark there is at least one fish
+                if scan_cells[1]!= []: # check if around the shark there is at least one fish
                     animal.eat()
-                    (x_eaten_fish,y_fish_eaten) = random.choice(scan_cases[1]) # creates a tuple with the position chosen by a random choice where the shark will go
+                    (x_eaten_fish,y_fish_eaten) = random.choice(scan_cells[1]) # creates a tuple with the position chosen by a random choice where the shark will go
                     if animal.reproduction_possibility(): # check if shark can reproduce
                         (x_temporary,y_temporary) = animal.get_position() #creates a tuple with the current position of the shark
                         self.list_fishes.remove(self.grid.get_value((x_eaten_fish,y_fish_eaten))) # removes the fish that is going to be eaten
@@ -147,10 +147,10 @@ class World:
                         self.grid.set_value((x_eaten_fish,y_fish_eaten), animal)
                         self.grid.set_value((x_temporary,y_temporary), 0)
                         animal.reproduction_index_increment()
-                elif scan_cases[0]!=[]: # else if there is no fish around but an empty position
+                elif scan_cells[0]!=[]: # else if there is no fish around but an empty position
                     if animal.reproduction_possibility():
                         (x_temporary,y_temporary) = animal.get_position()
-                        animal.set_position(random.choice(scan_cases[0]))
+                        animal.set_position(random.choice(scan_cells[0]))
                         new_shark = Shark((x_temporary,y_temporary))
                         self.list_sharks.append(new_shark)
                         self.grid.set_value((animal.get_position()), animal)
@@ -158,15 +158,16 @@ class World:
                         animal.reset_reproduction_index()
                     else:
                         (x_temporary,y_temporary) = animal.get_position()
-                        animal.set_position(random.choice(scan_cases[0]))
+                        animal.set_position(random.choice(scan_cells[0]))
                         self.grid.set_value((animal.get_position()), animal)
                         self.grid.set_value((x_temporary,y_temporary), 0)
                         animal.reproduction_index_increment()
+
             elif isinstance(self.grid.get_value(animal.position), Fish):
-                if scan_cases[0]!=[]:
+                if scan_cells[0]!=[]:
                     if animal.reproduction_possibility():
                         (x_temporary,y_temporary) = animal.get_position()
-                        animal.set_position(random.choice(scan_cases[0]))
+                        animal.set_position(random.choice(scan_cells[0]))
                         animal.reset_reproduction_index()
                         new_fish = Fish((x_temporary,y_temporary))
                         self.list_fishes.append(new_fish)
@@ -174,8 +175,66 @@ class World:
                         self.grid.set_value((x_temporary,y_temporary), new_fish)
                     else:
                         (x_temporary,y_temporary) = animal.get_position()
-                        animal.set_position(random.choice(scan_cases[0]))
+                        animal.set_position(random.choice(scan_cells[0]))
                         animal.reproduction_index_increment()
                         self.grid.set_value((animal.get_position()), animal)
                         self.grid.set_value((x_temporary,y_temporary), 0)
-                
+
+    def move(self, animal):
+            if animal.chronon == 0: # to avoid that new fishes move
+                pass
+    
+            else:
+                scan_cells = self.surrounding_scan(animal.get_position())
+
+                if isinstance((self.grid.get_value(animal.position)), Shark): #check if animal is a shark
+                    if scan_cells[1]!= []: # check if around the shark there is at least one fish
+                        animal.eat()
+                        (x_eaten_fish,y_fish_eaten) = random.choice(scan_cells[1]) # creates a tuple with the position chosen by a random choice where the shark will go
+                        (x_temporary,y_temporary) = animal.get_position()
+                        self.list_fishes.remove(self.grid.get_value((x_eaten_fish,y_fish_eaten)))
+                        animal.set_position((x_eaten_fish,y_fish_eaten))
+                        self.grid.set_value((x_eaten_fish,y_fish_eaten), animal)
+                        self.grid.set_value((x_temporary,y_temporary), 0)
+
+                    elif scan_cells[0]!=[]:
+                        (x_temporary,y_temporary) = animal.get_position()
+                        animal.set_position(random.choice(scan_cells[0]))
+                        self.grid.set_value((animal.get_position()), animal)
+                        self.grid.set_value((x_temporary,y_temporary), 0)
+
+                elif isinstance(self.grid.get_value(animal.position), Fish):
+                    if scan_cells[0]!=[]:
+                        (x_temporary,y_temporary) = animal.get_position()
+                        animal.set_position(random.choice(scan_cells[0]))
+                        animal.reproduction_index_increment()
+                        self.grid.set_value((animal.get_position()), animal)
+                        self.grid.set_value((x_temporary,y_temporary), 0)
+        
+
+    def reproduction(self, animal):
+        scan_cells = self.surrounding_scan(animal.get_position())
+
+        if isinstance((self.grid.get_value(animal.position)), Shark): #check if animal is a shark
+            if scan_cells[0] != [] and scan_cells[1] != 0:
+                (x_temporary,y_temporary) = animal.get_position() # moves the shark to its new position
+                new_shark = Shark((x_temporary,y_temporary)) # creates a new shark to the previous position of the shark
+                self.list_sharks.append(new_shark) # appends the new shark to the shark list
+                animal.reset_reproduction_index()
+
+        elif isinstance((self.grid.get_value(animal.position)), Fish): #check if animal is a shark
+            if scan_cells[0] != []:
+                (x_temporary,y_temporary) = animal.get_position() # moves the shark to its new position
+                new_fish = Fish((x_temporary,y_temporary)) # creates a new shark to the previous position of the shark
+                self.list_fishes.append(new_fish) # appends the new shark to the shark list
+                animal.reset_reproduction_index()
+
+    def reproduction_move_2(self, animal):
+
+        if animal.reproduction_index == animal.childbirth_value:
+            self.reproduction(animal)
+            self.move(animal)
+        
+        else:
+            self.move(animal)
+            animal.reproduction_index_increment()

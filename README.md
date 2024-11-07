@@ -41,7 +41,7 @@ Welcome to **Wator**, an immersive simulator that recreates a vibrant marine eco
 
 ## 📂 Project Structure
 
-- **bassin.py**: Manages the `Grid` class, responsible for creating and updating the 2D ocean grid.
+- **pool.py**: Manages the `Grid` class, responsible for creating and updating the 2D ocean grid.
 - **fish.py**: Contains the `Fish` class, which defines behaviors like moving, reproducing, and aging.
 - **shark.py**: Contains the `Shark` class, a subclass of Fish, adding features like energy management and eating.
 - **world.py**: Houses the `World` class, which initializes the ecosystem, populates the grid, and manages interactions between animals.

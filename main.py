@@ -8,8 +8,8 @@ import sys
 clear = lambda: os.system("cls" if os.name == "nt" else "clear")
 
 
-INITIAL_FISH_NUMBER = 150
-INITIAL_SHARK_NUMBER = 25
+INITIAL_FISH_NUMBER = 500
+INITIAL_SHARK_NUMBER = 250
 SCREEN_SIZE = (1300,1000)
 GRID_SIZE_HEIGHT = 1000//COL 
 GRID_SIZE_WIDTH = 1000//ROW 
@@ -74,8 +74,10 @@ def draw_fish(x, y):
     """
     cell_x = x * GRID_SIZE_HEIGHT
     cell_y = y * GRID_SIZE_WIDTH
-    icon_size = ((min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT) -10) , (min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT) -10))
-    icon_position= ((cell_x+GRID_SIZE_HEIGHT//2-(min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT) -10)//2, (cell_y + 5)))
+    min_case = (min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT))
+
+    icon_size = (min_case * 0.9 , min_case * 0.9)
+    icon_position= ((cell_x+(GRID_SIZE_HEIGHT-min_case *0.9)//2), (cell_y + 0.05 * GRID_SIZE_WIDTH))
 
     screen.blit(pygame.transform.scale(images[1], (icon_size[0], icon_size[1])), (icon_position[0], icon_position [1]))
 
@@ -101,8 +103,10 @@ def draw_shark(x, y):
     """
     cell_x = x * GRID_SIZE_HEIGHT
     cell_y = y * GRID_SIZE_WIDTH
-    icon_size = ((min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT) -10) , (min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT) -10))
-    icon_position= ((cell_x+GRID_SIZE_HEIGHT//2-(min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT) -10)//2, (cell_y + 5)))
+    min_case = (min(GRID_SIZE_WIDTH,GRID_SIZE_HEIGHT))
+
+    icon_size = (min_case * 0.9 , min_case * 0.9)
+    icon_position= ((cell_x+(GRID_SIZE_HEIGHT-min_case *0.9)//2), (cell_y + 0.05 * GRID_SIZE_WIDTH))
 
     screen.blit(pygame.transform.scale(images[0], (icon_size[0], icon_size[1])), (icon_position[0], icon_position [1]))
 
@@ -119,7 +123,7 @@ police = pygame.font.Font(None, 24)
 
 
 while True:
-    time.sleep(0.5)
+    time.sleep(0.1)
     screen.blit(images[2], (0,0))
     draw_grid()
     if new_world.list_sharks == [] or new_world.list_fishes == []:
@@ -136,6 +140,7 @@ while True:
         new_world.check_death_and_kill(animal)
     clear()
     new_world.grid.print_grid()
+
     fish_number = police.render(f"Fish number : {len(new_world.list_fishes)}", True, text_color)
     shark_number = police.render(f"Shark number : {len(new_world.list_sharks)}", True, text_color)
     for animal in new_world.list_fishes:
@@ -155,22 +160,33 @@ while True:
     for shark in new_world.list_sharks:
         total_chronon_shark += shark.get_chronon()
 
-    
-    mean_age_sharks = int(total_chronon_shark / len(new_world.list_sharks))
-    mean_age_fishes = int(total_chronon_fish / len(new_world.list_fishes))
-
-    average_fish_age_display = police.render(f"Average fish age:", True, text_color)
-    average_fish_age_var_display = police.render(f'{mean_age_fishes}', True, text_color)
-    average_shark_age_display = police.render(f"Average shark age:", True, text_color)
-    average_shar_age_var_display = police.render(f'{mean_age_sharks}', True, text_color)
+    if len(new_world.list_fishes) == 0 or len(new_world.list_sharks) == 0:
+        print("UNE ESPECE S'EST ETEINTE")
 
 
-    screen.blit(fish_number, (1050,100))
-    screen.blit(shark_number, (1050,150))
-    screen.blit(average_fish_age_display, (1050,200))
-    screen.blit(average_fish_age_var_display, (1050,225))
-    screen.blit(average_shark_age_display, (1050,250))
-    screen.blit(average_shar_age_var_display, (1050,275))
+        
+    else:
+
+        mean_age_sharks = int(total_chronon_shark / len(new_world.list_sharks))
+        mean_age_fishes = int(total_chronon_fish / len(new_world.list_fishes))
+
+        average_fish_age_display = police.render(f"Average fish age:", True, text_color)
+        average_fish_age_var_display = police.render(f'{mean_age_fishes}', True, text_color)
+        average_shark_age_display = police.render(f"Average shark age:", True, text_color)
+        average_shar_age_var_display = police.render(f'{mean_age_sharks}', True, text_color)
 
 
-    pygame.display.flip()
+        screen.blit(fish_number, (1050,100))
+        screen.blit(shark_number, (1050,150))
+        screen.blit(average_fish_age_display, (1050,200))
+        screen.blit(average_fish_age_var_display, (1050,225))
+        screen.blit(average_shark_age_display, (1050,250))
+        screen.blit(average_shar_age_var_display, (1050,275))
+
+
+        pygame.display.flip()
+# Quitter Pygame
+pygame.quit()
+sys.exit()
+
+

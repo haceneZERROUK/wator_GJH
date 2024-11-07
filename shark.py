@@ -2,7 +2,7 @@ from fish import Fish
 
 
 class Shark(Fish):
-    INITIAL_SHARK_ENERGY = 10
+    INITIAL_SHARK_ENERGY = 8
 
     def __init__(self, position : tuple, childbirth_value : int = 13, chronon : int = 0, energy : int = INITIAL_SHARK_ENERGY):
         """
